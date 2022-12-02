@@ -33,8 +33,12 @@ public class Day01Test {
         resultList.add(currentSum);
 
         final int result = resultList.stream().max(Comparator.naturalOrder()).get();
+        List<Integer> resultList2 = resultList.stream().sorted(Comparator.reverseOrder()).toList();
+
+        final int result2 = resultList2.get(0) + resultList2.get(1) + resultList2.get(2);
 
         assertEquals(69281, result);
+        assertEquals(201524, result2);
     }
 
     private List<String> getDay01DataAsList() throws IOException, URISyntaxException {
