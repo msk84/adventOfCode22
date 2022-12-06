@@ -12,13 +12,14 @@ import java.util.List;
 import java.util.Objects;
 
 import static net.msk.adventOfCode2022.Day02_RockPaperScissors.*;
+import static net.msk.adventOfCode2022.Day02_RockPaperScissors.GameResult.*;
 import static net.msk.adventOfCode2022.Day02_RockPaperScissors.RockPaperScissors.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class Day02Test {
 
     @Test
-    public void Task1Test() throws IOException, URISyntaxException {
+    public void task1Test() throws IOException, URISyntaxException {
         final List<String> lines = this.getDay02DataAsList();
         final List<Pair<RockPaperScissors, RockPaperScissors>> gameList = lines.stream()
                 .map(l -> {
@@ -30,12 +31,34 @@ public class Day02Test {
         assertEquals(12679, Day02_RockPaperScissors.calculateRPSGameListScore(gameList));
     }
 
+    @Test
+    public void task2Test() throws IOException, URISyntaxException {
+        final List<String> lines = this.getDay02DataAsList();
+        final List<Pair<RockPaperScissors, GameResult>> gameList = lines.stream()
+                .map(l -> {
+                    final String[] stringArray = l.split(" ");
+                    return Pair.of(convertStringToRPS(stringArray[0]), convertStringToGameResult(stringArray[1]));
+                })
+                .toList();
+
+        assertEquals(14470, Day02_RockPaperScissors.calculateRPSGameResultListScore(gameList));
+    }
+
     private RockPaperScissors convertStringToRPS(final String stringValue) {
         return switch (stringValue) {
             case "A", "X" -> Rock;
             case "B", "Y" -> Paper;
             case "C", "Z" -> Scissors;
             default -> throw new IllegalArgumentException("Invalid RPS input value.");
+        };
+    }
+
+    private GameResult convertStringToGameResult(final String stringValue) {
+        return switch (stringValue) {
+            case "X" -> LOST;
+            case "Y" -> TIE;
+            case "Z" -> WON;
+            default -> throw new IllegalArgumentException("Invaliid GameResult input value.");
         };
     }
 
