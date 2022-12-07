@@ -16,4 +16,12 @@ public class Day04Test extends BaseTest {
 
         assertEquals(513, fullyContainedSectionsCount);
     }
+
+    @Test
+    public void task2Test() throws IOException, URISyntaxException {
+        final List<String> lines = this.getDataFromFileAsList("day04_data");
+        final long intersectingSectionsCount = Day04_CampCleanup.countIntersectingSections(lines);
+
+        assertEquals(878, intersectingSectionsCount);
+    }
 }
