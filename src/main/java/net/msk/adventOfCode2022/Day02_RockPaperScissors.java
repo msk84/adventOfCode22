@@ -100,5 +100,4 @@ public class Day02_RockPaperScissors {
         }
         return GameResult.TIE;
     }
-
 }

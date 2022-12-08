@@ -7,14 +7,14 @@ import java.util.LinkedList;
 
 public class Day06_TuningTrouble {
 
-    public static int findEndOfMarkerPosition(final Reader streamReader) throws IOException {
-        final LinkedList<Character> charBuffer = new LimitedQueue<>(4);
+    public static int findEndOfMarkerPosition(final Reader streamReader, final int markerLength) throws IOException {
+        final LinkedList<Character> charBuffer = new LimitedQueue<>(markerLength);
         int i = 1;
         int s;
         while((s = streamReader.read()) != -1) {
             final Character c = (char)s;
             charBuffer.add(c);
-            if(isMarkerFound(charBuffer)) {
+            if(isMarkerFound(charBuffer, markerLength)) {
                 return i;
             }
             i++;
@@ -22,7 +22,7 @@ public class Day06_TuningTrouble {
         throw new RuntimeException("No marker found.");
     }
 
-    private static boolean isMarkerFound(final LinkedList<Character> charBuffer) {
-        return new HashSet<>(charBuffer).size() == 4;
+    private static boolean isMarkerFound(final LinkedList<Character> charBuffer, final int markerLength) {
+        return new HashSet<>(charBuffer).size() == markerLength;
     }
 }

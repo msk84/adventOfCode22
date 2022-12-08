@@ -42,5 +42,4 @@ public class Day04_CampCleanup {
                 .boxed()
                 .collect(Collectors.toSet());
     }
-
 }
