@@ -2,13 +2,13 @@ package net.msk.adventOfCode2022.model;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FileSystem {
 
     private final Directory root;
     private Directory currentDirectory;
-
-    private static int dirIsSmallerSum = 0;
 
     public FileSystem() {
         this.root = new Directory("/");
@@ -34,29 +34,22 @@ public class FileSystem {
     }
 
     public int getTotalSizeOfAllDirectoriesSmallerThan(final Integer sizeLimitToBeConsidered) {
-        synchronized (FileSystem.class) {
-            dirIsSmallerSum = 0;
-            final int result = iterateDirectories(this.root, sizeLimitToBeConsidered);
-            if(sizeLimitToBeConsidered != null) {
-                return dirIsSmallerSum;
-            }
-            else {
-                return result;
-            }
-        }
+        final List<Pair<String, Integer>> directoryMap = new ArrayList<>();
+        iterateDirectories(this.root, directoryMap);
+        return directoryMap.stream()
+                .filter(d -> d.value() < sizeLimitToBeConsidered)
+                .mapToInt(Pair::value)
+                .sum();
     }
 
-    private static Integer iterateDirectories(final Directory dir, final Integer sizeLimitToBeConsidered) {
+    private static Integer iterateDirectories(final Directory dir, final List<Pair<String, Integer>> directoryMap) {
         int result = 0;
         for(final Directory subDir : dir.getAllChildDirectories()) {
-            final Integer subDirSize = iterateDirectories(subDir, sizeLimitToBeConsidered);
-            result += subDirSize;
+            result += iterateDirectories(subDir, directoryMap);
         }
 
         result += dir.getSizeOfFiles();
-        if(sizeLimitToBeConsidered == null || result < sizeLimitToBeConsidered){
-            dirIsSmallerSum += result;
-        }
+        directoryMap.add(Pair.of(dir.getName(), result));
         return result;
     }
 

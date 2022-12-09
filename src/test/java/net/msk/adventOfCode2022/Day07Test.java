@@ -24,7 +24,6 @@ public class Day07Test extends BaseTest {
         final FileSystem fileSystem = new FileSystem();
         fileSystem.processInput(bufferedReader);
 
-        assertEquals(48381165, fileSystem.getTotalSizeOfAllDirectoriesSmallerThan(null));
         assertEquals(95437, fileSystem.getTotalSizeOfAllDirectoriesSmallerThan(100000));
     }
 
