@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class FileSystem {
 
@@ -40,6 +41,19 @@ public class FileSystem {
                 .filter(d -> d.value() < sizeLimitToBeConsidered)
                 .mapToInt(Pair::value)
                 .sum();
+    }
+
+    public int getSizeOfSmallestDirToFreeUpEnoughSpace(final int totalSpace, final int neededSpace) {
+        final List<Pair<String, Integer>> directoryMap = new ArrayList<>();
+        final int currentlyUsedSpace = iterateDirectories(this.root, directoryMap);
+        final int freeSpace = totalSpace - currentlyUsedSpace;
+        final int spaceToBeFreed = neededSpace - freeSpace;
+
+        return directoryMap.stream()
+                .filter(d -> d.value() > spaceToBeFreed)
+                .mapToInt(Pair::value)
+                .min()
+                .orElseThrow(NoSuchElementException::new);
     }
 
     private static Integer iterateDirectories(final Directory dir, final List<Pair<String, Integer>> directoryMap) {
