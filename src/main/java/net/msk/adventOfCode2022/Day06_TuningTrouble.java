@@ -1,5 +1,7 @@
 package net.msk.adventOfCode2022;
 
+import net.msk.adventOfCode2022.model.LimitedQueue;
+
 import java.io.IOException;
 import java.io.Reader;
 import java.util.HashSet;

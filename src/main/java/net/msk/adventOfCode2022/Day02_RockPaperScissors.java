@@ -1,5 +1,7 @@
 package net.msk.adventOfCode2022;
 
+import net.msk.adventOfCode2022.model.Pair;
+
 import java.util.List;
 
 public class Day02_RockPaperScissors {

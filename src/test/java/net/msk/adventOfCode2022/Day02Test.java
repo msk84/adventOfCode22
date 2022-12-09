@@ -1,5 +1,6 @@
 package net.msk.adventOfCode2022;
 
+import net.msk.adventOfCode2022.model.Pair;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package net.msk.adventOfCode2022;
+package net.msk.adventOfCode2022.model;
 
 import java.util.LinkedList;
 
