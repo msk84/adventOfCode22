@@ -53,11 +53,21 @@ public class Day08_Forrest {
             int currentMaxHeightTop = -1;
             int currentMaxHeightBottom = -1;
             for(int j=0; j<edgeLength; j++) {
-                currentMaxHeightLeft = checkAndMark(this.trees.get(i).get(j), currentMaxHeightLeft);
-                currentMaxHeightRight = checkAndMark(this.trees.get(i).get(edgeLength -1 -j), currentMaxHeightRight);
-                currentMaxHeightTop = checkAndMark(this.trees.get(j).get(i), currentMaxHeightTop);
-                currentMaxHeightBottom = checkAndMark(this.trees.get(edgeLength -1 -j).get(i), currentMaxHeightBottom);
+                currentMaxHeightLeft = checkTreeVisibilityAndMark(this.trees.get(i).get(j), currentMaxHeightLeft);
+                currentMaxHeightRight = checkTreeVisibilityAndMark(this.trees.get(i).get(edgeLength -1 -j), currentMaxHeightRight);
+                currentMaxHeightTop = checkTreeVisibilityAndMark(this.trees.get(j).get(i), currentMaxHeightTop);
+                currentMaxHeightBottom = checkTreeVisibilityAndMark(this.trees.get(edgeLength -1 -j).get(i), currentMaxHeightBottom);
             }
+        }
+    }
+
+    private int checkTreeVisibilityAndMark(final Tree tree, final int currentMaxHeight) {
+        if(tree.getSize() > currentMaxHeight) {
+            tree.setVisible();
+            return tree.getSize();
+        }
+        else {
+            return currentMaxHeight;
         }
     }
 
@@ -66,51 +76,44 @@ public class Day08_Forrest {
         for(int i=0; i<edgeLength; i++) {
             for(int j=0; j<edgeLength; j++) {
                 final Tree currentTree = this.trees.get(i).get(j);
-
-                int right = 0;
-                for(int r = j+1; r<edgeLength; r++) {
-                    right++;
-                    if(currentTree.getSize() <= this.trees.get(i).get(r).getSize()) {
-                        break;
-                    }
-                }
-
-                int left = 0;
-                for(int l = j-1; l>=0; l--) {
-                    left++;
-                    if(currentTree.getSize() <= this.trees.get(i).get(l).getSize()) {
-                        break;
-                    }
-                }
-
-                int up = 0;
-                for(int u = i-1; u>=0; u--) {
-                    up++;
-                    if(currentTree.getSize() <= this.trees.get(u).get(j).getSize()) {
-                        break;
-                    }
-                }
-
-                int down = 0;
-                for(int d = i+1; d<edgeLength; d++) {
-                    down++;
-                    if(currentTree.getSize() <= this.trees.get(d).get(j).getSize()) {
-                        break;
-                    }
-                }
-
-                currentTree.setScenicScore(right * left * up * down);
+                this.calculateScenicScorePerTreeAndSet(currentTree, i, j, edgeLength);
             }
         }
     }
 
-    private int checkAndMark(final Tree tree, final int currentMaxHeight) {
-        if(tree.getSize() > currentMaxHeight) {
-            tree.setVisible();
-            return tree.getSize();
+    private void calculateScenicScorePerTreeAndSet(final Tree tree, final int row, final int column, final int edgeLength) {
+        int right = 0;
+        for(int r = column+1; r<edgeLength; r++) {
+            right++;
+            if(tree.getSize() <= this.trees.get(row).get(r).getSize()) {
+                break;
+            }
         }
-        else {
-            return currentMaxHeight;
+
+        int left = 0;
+        for(int l = column-1; l>=0; l--) {
+            left++;
+            if(tree.getSize() <= this.trees.get(row).get(l).getSize()) {
+                break;
+            }
         }
+
+        int up = 0;
+        for(int u = row-1; u>=0; u--) {
+            up++;
+            if(tree.getSize() <= this.trees.get(u).get(column).getSize()) {
+                break;
+            }
+        }
+
+        int down = 0;
+        for(int d = row+1; d<edgeLength; d++) {
+            down++;
+            if(tree.getSize() <= this.trees.get(d).get(column).getSize()) {
+                break;
+            }
+        }
+
+        tree.setScenicScore(right * left * up * down);
     }
 }
