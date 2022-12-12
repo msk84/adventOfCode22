@@ -1,6 +1,5 @@
 package net.msk.adventOfCode2022;
 
-import net.msk.adventOfCode2022.model.FileSystem;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
@@ -21,7 +20,7 @@ public class Day07Test extends BaseTest {
         final Reader reader = new InputStreamReader(inputStream);
         final BufferedReader bufferedReader = new BufferedReader(reader);
 
-        final FileSystem fileSystem = new FileSystem();
+        final Day07_FileSystem fileSystem = new Day07_FileSystem();
         fileSystem.processInput(bufferedReader);
 
         assertEquals(95437, fileSystem.getTotalSizeOfAllDirectoriesSmallerThan(100000));
@@ -35,7 +34,7 @@ public class Day07Test extends BaseTest {
         final Reader reader = new InputStreamReader(inputStream);
         final BufferedReader bufferedReader = new BufferedReader(reader);
 
-        final FileSystem fileSystem = new FileSystem();
+        final Day07_FileSystem fileSystem = new Day07_FileSystem();
         fileSystem.processInput(bufferedReader);
         final int resultSum = fileSystem.getTotalSizeOfAllDirectoriesSmallerThan(100000);
         assertEquals(1297159, resultSum);
@@ -49,7 +48,7 @@ public class Day07Test extends BaseTest {
         final Reader reader = new InputStreamReader(inputStream);
         final BufferedReader bufferedReader = new BufferedReader(reader);
 
-        final FileSystem fileSystem = new FileSystem();
+        final Day07_FileSystem fileSystem = new Day07_FileSystem();
         fileSystem.processInput(bufferedReader);
 
         assertEquals(24933642, fileSystem.getSizeOfSmallestDirToFreeUpEnoughSpace(70000000, 30000000));
@@ -63,7 +62,7 @@ public class Day07Test extends BaseTest {
         final Reader reader = new InputStreamReader(inputStream);
         final BufferedReader bufferedReader = new BufferedReader(reader);
 
-        final FileSystem fileSystem = new FileSystem();
+        final Day07_FileSystem fileSystem = new Day07_FileSystem();
         fileSystem.processInput(bufferedReader);
         final int resultDirSize = fileSystem.getSizeOfSmallestDirToFreeUpEnoughSpace(70000000, 30000000);
         assertEquals(3866390, resultDirSize);

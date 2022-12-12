@@ -1,6 +1,5 @@
 package net.msk.adventOfCode2022;
 
-import net.msk.adventOfCode2022.model.Forrest;
 import net.msk.adventOfCode2022.model.Tree;
 import org.junit.jupiter.api.Test;
 
@@ -15,21 +14,21 @@ public class Day08Test extends BaseTest {
 
     @Test
     public void task1SimpleTest() {
-        final Forrest forrest = new Forrest(getSimpleTestData());
+        final Day08_Forrest forrest = new Day08_Forrest(getSimpleTestData());
         assertEquals(21, forrest.getNumberOfVisibleTrees());
     }
 
     @Test
     public void task1Test() throws IOException, URISyntaxException {
         final List<String> data = this.getDataFromFileAsList("day08_data");
-        final Forrest forrest = new Forrest(data);
+        final Day08_Forrest forrest = new Day08_Forrest(data);
         final long numberOfVisibleTrees = forrest.getNumberOfVisibleTrees();
         assertEquals(1647, numberOfVisibleTrees);
     }
 
     @Test
     public void task2SimpleTest() {
-        final Forrest forrest = new Forrest(getSimpleTestData());
+        final Day08_Forrest forrest = new Day08_Forrest(getSimpleTestData());
         forrest.getMaxScenicScore(); // just to trigger calculation
         final Tree tree1 = forrest.getTreeByCoordinate(2, 1);
         assertEquals(4, tree1.getScenicScore());
@@ -40,7 +39,7 @@ public class Day08Test extends BaseTest {
     @Test
     public void task2Test() throws IOException, URISyntaxException {
         final List<String> data = this.getDataFromFileAsList("day08_data");
-        final Forrest forrest = new Forrest(data);
+        final Day08_Forrest forrest = new Day08_Forrest(data);
         final int maxScenicScore = forrest.getMaxScenicScore();
         assertEquals(392080, maxScenicScore);
     }

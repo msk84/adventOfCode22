@@ -1,13 +1,15 @@
-package net.msk.adventOfCode2022.model;
+package net.msk.adventOfCode2022;
+
+import net.msk.adventOfCode2022.model.Tree;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Forrest {
+public class Day08_Forrest {
 
     private final List<List<Tree>> trees = new ArrayList<>();
 
-    public Forrest(final List<String> forrestData) {
+    public Day08_Forrest(final List<String> forrestData) {
         forrestData.forEach(d -> this.trees.add(d.chars()
                     .mapToObj(Character::getNumericValue)
                     .map(Tree::new)

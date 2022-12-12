@@ -1,4 +1,8 @@
-package net.msk.adventOfCode2022.model;
+package net.msk.adventOfCode2022;
+
+import net.msk.adventOfCode2022.model.Directory;
+import net.msk.adventOfCode2022.model.File;
+import net.msk.adventOfCode2022.model.Pair;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -6,12 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-public class FileSystem {
+public class Day07_FileSystem {
 
     private final Directory root;
     private Directory currentDirectory;
 
-    public FileSystem() {
+    public Day07_FileSystem() {
         this.root = new Directory("/");
         this.currentDirectory = this.root;
     }
