@@ -1,26 +1,25 @@
 package net.msk.adventOfCode2022;
 
 import net.msk.adventOfCode2022.model.Position;
-
-import java.util.HashSet;
-import java.util.Set;
+import net.msk.adventOfCode2022.model.Knot;
 
 import static java.lang.Math.abs;
 
 public class Day09_RopeBridge {
 
-    private Position currentHead = new Position(0,0);
-
-    private Position currentTail = new Position(0,0);
-
-    private final Set<Position> uniqueTailHistory = new HashSet<>();
+    private final Knot head;
 
     private enum Direction {
         U, D, L, R
     }
 
-    public Day09_RopeBridge() {
-        this.uniqueTailHistory.add(this.currentTail);
+    public Day09_RopeBridge(final int numberOfTails) {
+        final Position startPosition = new Position(0,0);
+        Knot recentTail = new Knot(startPosition, null);
+        for(int i=0; i<numberOfTails-1; i++) {
+            recentTail = new Knot(startPosition, recentTail);
+        }
+        this.head = new Knot(startPosition, recentTail);
     }
 
     public void processMoveCommand(final String command) {
@@ -31,8 +30,12 @@ public class Day09_RopeBridge {
         this.moveHead(dir, steps);
     }
 
-    public int getNumberOfUniqueTailPositions() {
-        return this.uniqueTailHistory.size();
+    public int getNumberOfUniqueLastTailPositions() {
+        Knot currentKnot = this.head;
+        while(currentKnot.hasNextKnot()) {
+            currentKnot = currentKnot.getNextKnot();
+        }
+        return currentKnot.getUniquePositionHistory().size();
     }
 
     private void moveHead(final Direction dir, final int steps) {
@@ -43,37 +46,40 @@ public class Day09_RopeBridge {
 
     private void stepHead(final Direction dir) {
         switch (dir) {
-            case U -> this.currentHead = Position.of(this.currentHead.x(), this.currentHead.y() + 1);
-            case D -> this.currentHead = Position.of(this.currentHead.x(), this.currentHead.y() - 1);
-            case L -> this.currentHead = Position.of(this.currentHead.x() - 1, this.currentHead.y());
-            case R -> this.currentHead = Position.of(this.currentHead.x() + 1, this.currentHead.y());
+            case U -> this.head.setPosition(Position.of(this.head.getPosition().x(), this.head.getPosition().y() + 1));
+            case D -> this.head.setPosition(Position.of(this.head.getPosition().x(), this.head.getPosition().y() - 1));
+            case L -> this.head.setPosition(Position.of(this.head.getPosition().x() - 1, this.head.getPosition().y()));
+            case R -> this.head.setPosition(Position.of(this.head.getPosition().x() + 1, this.head.getPosition().y()));
         }
 
-        this.stepTail();
+        Knot currentKnot = this.head;
+        while(currentKnot.hasNextKnot()) {
+            this.stepTail(currentKnot, currentKnot.getNextKnot());
+            currentKnot = currentKnot.getNextKnot();
+        }
     }
 
-    private void stepTail() {
-        final int xAbsDiff = abs(this.currentHead.x() - this.currentTail.x());
-        final int yAbsDiff = abs(this.currentHead.y() - this.currentTail.y());
+    private void stepTail(final Knot leadingKnot, final Knot trailingKnot) {
+        final int xAbsDiff = abs(leadingKnot.getPosition().x() - trailingKnot.getPosition().x());
+        final int yAbsDiff = abs(leadingKnot.getPosition().y() - trailingKnot.getPosition().y());
         if(xAbsDiff > 1 || yAbsDiff > 1) {
-            int newTailX = this.currentTail.x();
-            int newTailY = this.currentTail.y();
+            int newTailX = trailingKnot.getPosition().x();
+            int newTailY = trailingKnot.getPosition().y();
 
             if(xAbsDiff > 1) {
-                newTailX = this.currentTail.x() + ((this.currentHead.x() - this.currentTail.x()) / xAbsDiff);
+                newTailX = trailingKnot.getPosition().x() + ((leadingKnot.getPosition().x() - trailingKnot.getPosition().x()) / xAbsDiff);
                 if(yAbsDiff > 0) {
-                    newTailY = this.currentHead.y();
+                    newTailY = leadingKnot.getPosition().y();
                 }
             }
             else {
-                newTailY = this.currentTail.y() + ((this.currentHead.y() - this.currentTail.y()) / yAbsDiff);
+                newTailY = trailingKnot.getPosition().y() + ((leadingKnot.getPosition().y() - trailingKnot.getPosition().y()) / yAbsDiff);
                 if(xAbsDiff > 0) {
-                    newTailX = this.currentHead.x();
+                    newTailX = leadingKnot.getPosition().x();
                 }
             }
 
-            this.currentTail = Position.of(newTailX, newTailY);
-            this.uniqueTailHistory.add(this.currentTail);
+            trailingKnot.setPosition(Position.of(newTailX, newTailY));
         }
     }
 }
