@@ -80,9 +80,6 @@ public class Day09Test extends BaseTest {
         final Day09_RopeBridge ropeBridge = new Day09_RopeBridge(9);
         commands.forEach(ropeBridge::processMoveCommand);
         final int numberOfUniqueTailPositions = ropeBridge.getNumberOfUniqueLastTailPositions();
-        assertEquals(2492, numberOfUniqueTailPositions);
-        // 2492 -> too high...
-        // https://www.reddit.com/r/adventofcode/comments/zgnice/2022_day_9_solutions/
-        // while the head can never have a distance of +/-2,+/-2 to knot 1, this CAN happen for knot X to knot X + 1!
+        assertEquals(2482, numberOfUniqueTailPositions);
     }
 }

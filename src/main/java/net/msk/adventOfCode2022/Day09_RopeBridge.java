@@ -3,6 +3,7 @@ package net.msk.adventOfCode2022;
 import net.msk.adventOfCode2022.model.Position;
 import net.msk.adventOfCode2022.model.Knot;
 
+import static java.lang.Integer.compare;
 import static java.lang.Math.abs;
 
 public class Day09_RopeBridge {
@@ -63,22 +64,8 @@ public class Day09_RopeBridge {
         final int xAbsDiff = abs(leadingKnot.getPosition().x() - trailingKnot.getPosition().x());
         final int yAbsDiff = abs(leadingKnot.getPosition().y() - trailingKnot.getPosition().y());
         if(xAbsDiff > 1 || yAbsDiff > 1) {
-            int newTailX = trailingKnot.getPosition().x();
-            int newTailY = trailingKnot.getPosition().y();
-
-            if(xAbsDiff > 1) {
-                newTailX = trailingKnot.getPosition().x() + ((leadingKnot.getPosition().x() - trailingKnot.getPosition().x()) / xAbsDiff);
-                if(yAbsDiff > 0) {
-                    newTailY = leadingKnot.getPosition().y();
-                }
-            }
-            else {
-                newTailY = trailingKnot.getPosition().y() + ((leadingKnot.getPosition().y() - trailingKnot.getPosition().y()) / yAbsDiff);
-                if(xAbsDiff > 0) {
-                    newTailX = leadingKnot.getPosition().x();
-                }
-            }
-
+            int newTailX = trailingKnot.getPosition().x() + compare(leadingKnot.getPosition().x() - trailingKnot.getPosition().x(), 0);
+            int newTailY = trailingKnot.getPosition().y() + compare(leadingKnot.getPosition().y() - trailingKnot.getPosition().y(), 0);
             trailingKnot.setPosition(Position.of(newTailX, newTailY));
         }
     }
