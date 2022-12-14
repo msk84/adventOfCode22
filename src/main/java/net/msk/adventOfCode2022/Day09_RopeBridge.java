@@ -27,7 +27,6 @@ public class Day09_RopeBridge {
         final String[] commandValues = command.split(" ");
         final Direction dir = Direction.valueOf(commandValues[0]);
         final int steps = Integer.parseInt(commandValues[1]);
-
         this.moveHead(dir, steps);
     }
 
@@ -61,11 +60,11 @@ public class Day09_RopeBridge {
     }
 
     private void stepTail(final Knot leadingKnot, final Knot trailingKnot) {
-        final int xAbsDiff = abs(leadingKnot.getPosition().x() - trailingKnot.getPosition().x());
-        final int yAbsDiff = abs(leadingKnot.getPosition().y() - trailingKnot.getPosition().y());
-        if(xAbsDiff > 1 || yAbsDiff > 1) {
-            int newTailX = trailingKnot.getPosition().x() + compare(leadingKnot.getPosition().x() - trailingKnot.getPosition().x(), 0);
-            int newTailY = trailingKnot.getPosition().y() + compare(leadingKnot.getPosition().y() - trailingKnot.getPosition().y(), 0);
+        final int xDiff = leadingKnot.getPosition().x() - trailingKnot.getPosition().x();
+        final int yDiff = leadingKnot.getPosition().y() - trailingKnot.getPosition().y();
+        if(abs(xDiff) > 1 || abs(yDiff) > 1) {
+            int newTailX = trailingKnot.getPosition().x() + compare(xDiff, 0);
+            int newTailY = trailingKnot.getPosition().y() + compare(yDiff, 0);
             trailingKnot.setPosition(Position.of(newTailX, newTailY));
         }
     }
