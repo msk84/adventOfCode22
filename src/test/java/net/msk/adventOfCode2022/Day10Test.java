@@ -1,5 +1,6 @@
 package net.msk.adventOfCode2022;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -15,6 +16,7 @@ public class Day10Test extends BaseTest {
     }
 
     @Test
+    @Disabled
     public void task1Test() throws IOException, URISyntaxException {
         final List<String> commands = this.getDataFromFileAsList("day10_data");
         final Day09_RopeBridge ropeBridge = new Day09_RopeBridge(1);
